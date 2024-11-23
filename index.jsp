@@ -7,5 +7,7 @@
 </head>
 
 <body>
- <h1>스케줄</h1>
+    <script>
+        window.location.href = 'page/loginPage.jsp';
+    </script>
 </body>
