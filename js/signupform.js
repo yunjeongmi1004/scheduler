@@ -10,33 +10,28 @@ var email = document.getElementById("email");
 var department = document.getElementById("department");
 var authority = document.getElementById("authority");
 
-var errMsg = document.querySelectorAll('.errmsg');
-var idPttern = /^[a-zA-Z0-9]{4,20}$/; // 영문과 숫자 조합 4~20자
-var pwPttern =  /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()]{4,20}$/; // 영문 + 숫자 필수 특수문자 사용가능 4~20자
-var emailPttern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;// 이메일 정규표현식
 
-
-id.addEventListener("focusout", checkId);
-password.addEventListener("focusout", checkPw);
-passwordCheck.addEventListener("focusout", comparePw);
-username.addEventListener("focusout", checkName);
-email.addEventListener("focusout", checkEmail);
-department.addEventListener("focusout", checkDepartment);
-authority.addEventListener("focusout", checkAuthority);
+id.addEventListener("keyup", checkId);
+password.addEventListener("keyup", checkPw);
+passwordCheck.addEventListener("keyup", comparePw);
+username.addEventListener("keyup", checkName);
+email.addEventListener("keyup", checkEmail);
+department.addEventListener("keyup", checkDepartment);
+authority.addEventListener("keyup", checkAuthority);
 
 function checkId(){
     if (id.value == "") {
         errMsg[0].innerHTML = "아이디는 필수 정보입니다.";
         errMsg[0].style.display = "block";
+        errMsg[0].classList.remove("success");
     }else if(!idPttern.test(id.value)){
         errMsg[0].innerHTML = "아이디는 4자 이상 20자 이하의 영문 or 숫자 or 영문+숫자 조합으로 입력해주세요.";
-        errMsg[0].style.display = "block";      
+        errMsg[0].style.display = "block";
+        errMsg[0].classList.remove("success");   
     }else if(id.value.indexOf(" ") > -1){
         errMsg[0].innerHTML = "공백 없이 입력해주세요.";
         errMsg[0].style.display = "block";
-    }else if(uncheckid.value == "N"){
-        alert('아이디 중복체크를 해주세요 하고 중복체크 action.jsp로 넘기기');
-        errMsg[0].style.display = "none";
+        errMsg[0].classList.remove("success");
     }else{
         errMsg[0].innerHTML = "올바른 아이디 양식입니다.";
         errMsg[0].style.display = "block";
@@ -48,12 +43,15 @@ function checkPw(){
     if (password.value == "") {
         errMsg[1].innerHTML = "비밀번호는 필수 정보입니다.";
         errMsg[1].style.display = "block";
+        errMsg[1].classList.remove("success");
     }else if(!pwPttern.test(password.value)){
         errMsg[1].innerHTML = "비밀번호는 4자이상 20자 이하로 영문 + 숫자 필수 포함으로 입력해주세요.";
-        errMsg[1].style.display = "block";      
+        errMsg[1].style.display = "block";     
+        errMsg[1].classList.remove("success"); 
     }else if(password.value.indexOf(" ") > -1){
         errMsg[1].innerHTML = "공백 없이 입력해주세요.";
         errMsg[1].style.display = "block";
+        errMsg[1].classList.remove("success");
     }else{
         errMsg[1].innerHTML = "올바른 비밀번호 양식입니다.";
         errMsg[1].style.display = "block";  
@@ -65,9 +63,15 @@ function comparePw(){
     if(passwordCheck.value == ""){
         errMsg[2].innerHTML = "비밀번호 입력을 완료해주세요.";
         errMsg[2].style.display = "block"; 
+        errMsg[2].classList.remove("success");
+    }else if(!errMsg[1].classList.contains("success")){
+        errMsg[2].innerHTML = "사용 가능한 비밀번호인지 먼저 체크해주세요.";
+        errMsg[2].style.display = "block"; 
+        errMsg[2].classList.remove("success");
     }else if(passwordCheck.value !== password.value){
         errMsg[2].innerHTML = "비밀번호가 일치하지 않습니다.";
         errMsg[2].style.display = "block"; 
+        errMsg[2].classList.remove("success");
     }else{
         errMsg[2].innerHTML = "비밀번호 확인이 완료되었습니다.";
         errMsg[2].style.display = "block";   
@@ -99,13 +103,8 @@ function checkEmail(){
         errMsg[4].style.display = "block";
         errMsg[4].classList.remove("success");
     }else if(!emailPttern.test(email.value)) {
-        email.focus();
         errMsg[4].innerHTML = "올바른 이메일 양식으로 입력해주세요.";
         errMsg[4].style.display = "block";
-        errMsg[4].classList.remove("success");
-    }else if(uncheckemail.value == "N"){
-        alert('이메일 중복체크를 해주세요 하고 중복체크 action.jsp로 넘기기');
-        errMsg[4].style.display = "none";
         errMsg[4].classList.remove("success");
     }else{
         errMsg[4].innerHTML = "올바른 이메일 양식입니다.";
@@ -142,8 +141,15 @@ function checkAuthority(){
 function signupEvent() {
     if (id.value == "" || username.value == "" || email.value == "" || password.value == "" || department.value == "" || authority.value == "" ) {
         alert("모든 필드는 입력은 필수 입니다.");
+    }else if(uncheckid.value == "N"){
+        alert('아이디 중복체크를 해주세요 하고 중복체크 action.jsp로 넘기기');
+        errMsg[0].style.display = "none";
+        errMsg[0].classList.remove("success");
+    }else if(uncheckemail.value == "N"){
+        alert('이메일 중복체크를 해주세요 하고 중복체크 action.jsp로 넘기기');
+        errMsg[4].style.display = "none";
+        errMsg[4].classList.remove("success");
     }else{
-
         if(errMsg[0].classList.contains("success") && errMsg[1].classList.contains("success") && errMsg[2].classList.contains("success") && errMsg[3].classList.contains("success") && errMsg[4].classList.contains("success") && errMsg[5].classList.contains("success")){
             alert("유효성 체크 성공, 회원가입 action.jsp로 넘겨주기");
         }else{
@@ -152,36 +158,6 @@ function signupEvent() {
     }
 }
 
-function loginEvent(){
-    if (id.value == "" || password.value == "" ) {
-        alert("모든 필드는 입력은 필수 입니다.");
-    }else{
-        // checkIdlogin();
-        // checkPw();
-        if(errMsg[0].classList.contains("success") && errMsg[1].classList.contains("success")){
-            alert("로그인 성공, 로그인 action.jsp로 넘겨주기");
-        }else{
-            alert("잘못된 필드 입력을 확인해주세요.")
-        }
-    }
-}
-
-
-function loginPageEvent(){
-    location.href = '../page/loginPage.jsp'
-}
-
-function signupPageEvent(){
-    location.href = '../page/signupPage.jsp'
-}
-
-function findidPageEvent(){
-    location.href = '../page/findidPage.jsp'
-}
-
-function findpwPageEvent(){
-    location.href = '../page/findpwPage.jsp'
-}
 
 function dbidCheck(){
     // if 사용 가능한 아이디라면(백엔드 통신으로 가능한지 모르겟으나 해볼 예정)

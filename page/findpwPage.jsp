@@ -30,31 +30,27 @@
    <link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 <body>
-    <main class="typeform">
-        <h1>로그인</h1>
+     <main class="typeform">
+        <h1>비밀번호 찾기</h1>
         <section class="form">
           <div class="form-box">
             <strong>아이디</strong>
-            <input type="text" id="idlogin" value="" class="default-input" placeholder="4자 이상 20자 이하 영문 or 숫자 or 영문+숫자 조합">
+            <input type="text" id="id" value="" class="default-input" placeholder="아이디를 입력해 주세요">
             <p class="errmsg"></p>
           </div>
           <div class="form-box">
-            <strong>비밀번호</strong>
-            <input type="password" id="password" value="" class="default-input" placeholder="4자이상 20자 이하 영문+숫자 필수 입력, 특수문자사용가능">
+            <strong>이메일</strong>
+            <input type="email" id="email" value="" class="default-input" placeholder="이메일 주소를 입력해 주세요">
             <p class="errmsg"></p>
           </div>
           <div class="btm-button">
-            <input class="btn full primary" type="button" value="로그인" onclick="loginEvent()">
-            <div class="text-button">
-              <input class="btn text" type="button" value="아이디 찾기" onclick="findidPageEvent()">
-              <input class="btn text" type="button" value="비밀번호 찾기" onclick="findpwPageEvent()">
-            </div>
+            <input class="btn full primary" type="button" value="확인" onclick="findpwEvent()">
             <hr aria-hidden="true" class="line" />
-            <input class="btn full green" type="button" value="회원가입" onclick="signupPageEvent()">
+            <input class="btn full green" type="button" value="로그인 하러 가기" onclick="loginPageEvent()">
           </div>
         </section>
     </main>
     <script src="../js/common.js"></script>
-    <script src="../js/loginform.js"></script>
+    <script src="../js/findpwform.js"></script>
 
 </body>
